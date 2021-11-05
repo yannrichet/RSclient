@@ -1,1 +1,10 @@
-PKG_LIBS = -lssl -lcrypto -lws2_32 -lgdi32 -lcrypt32
+VERSION = 1.1.1k
+PKG_CPPFLAGS = -DWin32 -I. -Iinclude -Iinclude/Win32 -I../windows/openssl-$(VERSION)/include
+PKG_LIBS = -lssl -lcrypto -lws2_32 -lgdi32 -lcrypt32 -L../windows/openssl-$(VERSION)/lib${R_ARCH}${CRT}
+
+all: $(SHLIB)
+
+$(SHLIB): winlibs
+
+winlibs:
+	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" "../tools/winlibs.R" $(VERSION)
